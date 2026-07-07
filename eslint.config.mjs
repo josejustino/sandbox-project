@@ -7,7 +7,6 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   
-  // Override default ignores of eslint-config-next.
   globalIgnores([
     ".next/**",
     "out/**",
@@ -15,7 +14,6 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
   ]),
 
-  // Adicionando as regras de qualidade e arquitetura no padrão Next 16
   {
     plugins: {
       "simple-import-sort": simpleImportSort,
@@ -24,12 +22,10 @@ const eslintConfig = defineConfig([
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
       
-      // REGRA DE RESTRIÇÃO DE ARQUITETURA (Esqueleto preparado para expandir)
       "no-restricted-imports": ["error", {
         "patterns": [{
           "group": ["@/components/ui/**"],
           "importNames": ["*"],
-          // "message": "Componentes de UI puros não podem importar regras de negócio de camadas superiores."
         }]
       }]
     },
