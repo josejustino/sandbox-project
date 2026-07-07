@@ -1,0 +1,24 @@
+# lefthook.yml
+
+# 1. VALIDAÇÃO DA MENSAGEM DO COMMIT (Roda instantaneamente no commit-msg)
+commit-msg:
+  commands:
+    conventional-commits:
+      tags: lint message
+      run: npx commitlint --edit {1}
+
+# 2. VALIDAÇÃO DO CÓDIGO (Roda apenas se a mensagem passar)
+pre-commit:
+  commands:
+    lint-staged:
+      tags: lint code
+      glob: "src/**/*.{ts,tsx}"
+      run: npx eslint --fix {staged_files} && npx prettier --write {staged_files}
+      stage_fixed: true # Re-adiciona ao stage automaticamente se o lint alterar algo
+
+# 3. VALIDAÇÃO ANTES DO PUSH (Garantia de Qualidade)
+pre-push:
+  commands:
+    suite-testes:
+      tags: tests
+      run: npm run test:run
